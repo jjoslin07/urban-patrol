@@ -1,6 +1,8 @@
 # Urban Patrol — 2D Side-Scrolling Action Browser Game
 
 A 2D side-scrolling urban beat-'em-up / run-and-gun browser game built with Vanilla HTML5 Canvas, ES Modules, and Web Audio API.
+<img width="1680" height="1236" alt="image" src="https://github.com/user-attachments/assets/9599ed7b-81ba-4e77-bed8-92d12e40a2e0" />
+
 
 ## Features
 - **3-Tier Rank Progression:**
