@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Urban Patrol — Police ➔ SWAT ➔ Soldier Progression</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    body {
+      background: radial-gradient(circle at top, #161f30 0%, #090d14 100%);
+      color: #e6edf3;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      gap: 10px;
+      padding: 12px;
+    }
+    .top-bar {
+      width: 960px;
+      max-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(22, 27, 34, 0.92);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 8px 14px;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: linear-gradient(135deg, #1f6feb, #0d419d);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #58a6ff;
+      text-transform: uppercase;
+    }
+    .brand h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f0f6fc;
+      letter-spacing: 0.4px;
+    }
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .toolbar-label {
+      font-size: 11px;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-right: 2px;
+    }
+    .pill-btn {
+      background: #21262d;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pill-btn:hover {
+      background: #30363d;
+      color: #fff;
+    }
+    .pill-btn.active {
+      background: #1f6feb;
+      color: #fff;
+      border-color: #58a6ff;
+      box-shadow: 0 0 10px rgba(31, 111, 235, 0.45);
+    }
+    .pill-btn.gold-tier.active {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-color: #ffd166;
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.45);
+    }
+    #game-container {
+      position: relative;
+      border: 2px solid #30363d;
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+      background: #0d1117;
+    }
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+      cursor: crosshair;
+    }
+    .controls-footer {
+      width: 960px;
+      max-width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(22, 27, 34, 0.85);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: #8b949e;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    kbd {
+      background: #21262d;
+      border: 1px solid #3b434b;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #e6edf3;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="brand">
+      <span class="badge">METRO FORCE</span>
+      <h1>URBAN PATROL</h1>
+    </div>
+
+    <div class="toolbar-group" id="tier-buttons">
+      <span class="toolbar-label">Rank Path:</span>
+      <button class="pill-btn gold-tier active" data-tier="police">Lv.1 Police</button>
+      <button class="pill-btn gold-tier" data-tier="swat">Lv.2 SWAT</button>
+      <button class="pill-btn gold-tier" data-tier="soldier">Lv.3 Soldier</button>
+      <button class="pill-btn" id="variant-btn" title="Switch character skin in current rank">[V] Skin</button>
+    </div>
+
+    <div class="toolbar-group" id="district-buttons">
+      <span class="toolbar-label">District:</span>
+      <button class="pill-btn active" data-district="0">D1</button>
+      <button class="pill-btn" data-district="1">D2</button>
+      <button class="pill-btn" data-district="2">D3</button>
+      <button class="pill-btn" data-district="3">D4</button>
+      <button class="pill-btn" id="pause-btn" title="Pause Game (Esc)">⏸ Pause</button>
+      <button class="pill-btn" id="mute-btn" title="Toggle Audio">🔊 SFX</button>
+    </div>
+  </div>
+
+  <div id="game-container">
+    <canvas id="game-canvas" width="960" height="540"></canvas>
+  </div>
+
+  <div class="controls-footer">
+    <div>
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / <kbd>Arrows</kbd> Move
+      &nbsp;•&nbsp; <kbd>Shift</kbd> Sprint
+      &nbsp;•&nbsp; <kbd>Space</kbd> Jump
+      &nbsp;•&nbsp; <kbd>Esc</kbd> Pause
+    </div>
+    <div>
+      <kbd>Hold J</kbd> / <kbd>L-Click</kbd> Primary Gun
+      &nbsp;•&nbsp; <kbd>Hold K</kbd> / <kbd>R-Click</kbd> Secondary Gun
+      &nbsp;•&nbsp; <kbd>F</kbd> Punch / Kick
+      &nbsp;•&nbsp; <kbd>M-Click</kbd> / <kbd>G</kbd> Grenade
+      &nbsp;•&nbsp; <kbd>R</kbd> Reload
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
