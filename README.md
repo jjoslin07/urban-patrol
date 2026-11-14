@@ -1,6 +1,6 @@
 # 🚨 Metro Force : Urban Patrol — v1.0.0 (Public Beta)
 
-Welcome to the first public beta release of **Urban Patrol**, a 2D pixel-art side-scrolling urban run-and-gun and beat-'em-up browser game built with Vanilla HTML5 Canvas, ES Modules, and procedural Web Audio API sound effects.
+Welcome to the first public beta release of **Metro Force : Urban Patrol**, a 2D pixel-art side-scrolling urban run-and-gun and beat-'em-up browser game built with Vanilla HTML5 Canvas, ES Modules, and procedural Web Audio API sound effects.
 <img width="1680" height="1236" alt="image" src="https://github.com/user-attachments/assets/9599ed7b-81ba-4e77-bed8-92d12e40a2e0" />
 🎮 **Play Live in Your Browser:** https://jjoslin07.github.io/urban-patrol/
 
