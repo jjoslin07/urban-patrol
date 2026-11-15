@@ -94,8 +94,8 @@ muteBtn.addEventListener('click', () => {
 function randomLaneY(district) {
   return (
     district.groundTopY +
-    10 +
-    Math.random() * (district.groundBottomY - district.groundTopY - 16)
+    4 +
+    Math.random() * Math.max(4, district.groundBottomY - district.groundTopY - 8)
   );
 }
 
@@ -163,8 +163,8 @@ function spawnEnemyLoot(enemy) {
   if (killsTowardsChest >= KILLS_PER_CHEST) {
     killsTowardsChest -= KILLS_PER_CHEST;
     const clampedLaneY = Math.max(
-      district.groundTopY + 12,
-      Math.min(district.groundBottomY - 8, enemy.laneY)
+      district.groundTopY + 4,
+      Math.min(district.groundBottomY - 4, enemy.laneY)
     );
     chests.push(new Chest(enemy.x, clampedLaneY, chestSpawnCount++));
     audio.playChestOpen();
@@ -188,8 +188,8 @@ function spawnEnemyLoot(enemy) {
   for (let i = 0; i < dropCount; i++) {
     const offsetX = (i - (dropCount - 1) / 2) * 32 + (Math.random() - 0.5) * 12;
     const clampedY = Math.max(
-      district.groundTopY + 10,
-      Math.min(district.groundBottomY - 8, enemy.laneY + (Math.random() - 0.5) * 16)
+      district.groundTopY + 4,
+      Math.min(district.groundBottomY - 4, enemy.laneY + (Math.random() - 0.5) * 12)
     );
 
     const typeRoll = Math.random();
@@ -440,12 +440,16 @@ function drawHUD() {
   // HP Bar
   ctx.fillStyle = '#21262d';
   ctx.fillRect(24, 39, 185, 12);
-  const hpRatio = Math.max(0, player.hp / player.maxHp);
-  ctx.fillStyle = hpRatio > 0.35 ? '#06d6a0' : '#ef476f';
+  const hpRatio = player.config.infiniteHealth ? 1 : Math.max(0, player.hp / player.maxHp);
+  ctx.fillStyle = player.config.infiniteHealth ? '#ffd166' : hpRatio > 0.35 ? '#06d6a0' : '#ef476f';
   ctx.fillRect(24, 39, Math.round(185 * hpRatio), 12);
-  ctx.fillStyle = '#f0f6fc';
+  ctx.fillStyle = player.config.infiniteHealth ? '#0d1117' : '#f0f6fc';
   ctx.font = 'bold 10px system-ui, sans-serif';
-  ctx.fillText(`HP ${player.hp}/${player.maxHp}`, 30, 49);
+  ctx.fillText(
+    player.config.infiniteHealth ? 'HP ∞ / INFINITE (3X DMG)' : `HP ${player.hp}/${player.maxHp}`,
+    30,
+    49
+  );
 
   // Grenade Energy Bar
   ctx.fillStyle = '#21262d';
@@ -458,14 +462,21 @@ function drawHUD() {
   ctx.font = 'bold 11px system-ui, sans-serif';
   ctx.fillText('PRI (L):', 24, 80);
   const maxPipsShown = Math.min(10, player.maxAmmo);
-  const filledPips = Math.ceil((player.ammo / player.maxAmmo) * maxPipsShown);
+  const filledPips = player.config.infiniteAmmo
+    ? maxPipsShown
+    : Math.ceil((player.ammo / player.maxAmmo) * maxPipsShown);
   for (let i = 0; i < maxPipsShown; i++) {
     ctx.fillStyle = i < filledPips ? '#ffd166' : '#30363d';
     ctx.fillRect(74 + i * 8, 70, 5, 11);
   }
-  ctx.fillStyle = player.ammo === 0 && player.reserveAmmo === 0 ? '#ff6b6b' : '#e6edf3';
+  ctx.fillStyle =
+    !player.config.infiniteAmmo && player.ammo === 0 && player.reserveAmmo === 0
+      ? '#ff6b6b'
+      : '#e6edf3';
   ctx.fillText(
-    `${player.ammo}/${player.maxAmmo} (+${player.reserveAmmo})`,
+    player.config.infiniteAmmo
+      ? '∞ INFINITE'
+      : `${player.ammo}/${player.maxAmmo} (+${player.reserveAmmo})`,
     74 + maxPipsShown * 8 + 6,
     80
   );
@@ -475,14 +486,21 @@ function drawHUD() {
   ctx.font = 'bold 11px system-ui, sans-serif';
   ctx.fillText('SEC (R):', 24, 100);
   const maxSecPips = Math.min(10, player.maxSecAmmo);
-  const filledSecPips = Math.ceil((player.secAmmo / player.maxSecAmmo) * maxSecPips);
+  const filledSecPips = player.config.infiniteAmmo
+    ? maxSecPips
+    : Math.ceil((player.secAmmo / player.maxSecAmmo) * maxSecPips);
   for (let i = 0; i < maxSecPips; i++) {
     ctx.fillStyle = i < filledSecPips ? '#ff9f1c' : '#30363d';
     ctx.fillRect(74 + i * 8, 90, 5, 11);
   }
-  ctx.fillStyle = player.secAmmo === 0 && player.secReserveAmmo === 0 ? '#ff6b6b' : '#f59e0b';
+  ctx.fillStyle =
+    !player.config.infiniteAmmo && player.secAmmo === 0 && player.secReserveAmmo === 0
+      ? '#ff6b6b'
+      : '#f59e0b';
   ctx.fillText(
-    `${player.secAmmo}/${player.maxSecAmmo} (+${player.secReserveAmmo})`,
+    player.config.infiniteAmmo
+      ? '∞ INFINITE'
+      : `${player.secAmmo}/${player.maxSecAmmo} (+${player.secReserveAmmo})`,
     74 + maxSecPips * 8 + 6,
     100
   );
@@ -510,7 +528,9 @@ function drawHUD() {
       ? 'GOLD UPGRADE: POLICE ➔ SWAT UNIT'
       : player.tierKey === 'swat'
       ? 'GOLD UPGRADE: SWAT ➔ ELITE SOLDIER'
-      : `ELITE SOLDIER (VETERAN RANK ${player.veteranRank})`;
+      : player.tierKey === 'soldier'
+      ? 'GOLD UPGRADE: SOLDIER ➔ OFFICER JOE'
+      : `OFFICER JOE (LEGEND RANK ${player.veteranRank})`;
   ctx.fillText(upgradeTitle, canvas.width / 2, 31);
 
   // Gold Progress Bar Track

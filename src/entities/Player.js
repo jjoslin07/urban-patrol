@@ -130,9 +130,12 @@ export class Player {
     } else if (tierKey === 'swat') {
       this.upgradeGold = 0;
       this.upgradeTarget = 10000;
+    } else if (tierKey === 'soldier') {
+      this.upgradeGold = 0;
+      this.upgradeTarget = 15000;
     } else {
       this.upgradeGold = 0;
-      this.upgradeTarget = 10000;
+      this.upgradeTarget = 15000;
     }
     if (particles) {
       particles.spawnHitSparks(this.x, this.laneY - 60, '#ffd166', 18);
@@ -159,17 +162,22 @@ export class Player {
         this.promotionBannerTimer = 3.2;
         this.promotionBannerText = 'PROMOTED TO TIER 2: METRO SWAT!';
       } else if (this.tierKey === 'swat') {
-        this.upgradeTarget = 10000;
+        this.upgradeTarget = 15000;
         this.applyTierConfig('soldier', 0, true);
         this.promotionBannerTimer = 3.2;
         this.promotionBannerText = 'PROMOTED TO TIER 3: ELITE SOLDIER!';
+      } else if (this.tierKey === 'soldier') {
+        this.upgradeTarget = 15000;
+        this.applyTierConfig('joe', 0, true);
+        this.promotionBannerTimer = 3.6;
+        this.promotionBannerText = '★ PROMOTED TO TIER 4: OFFICER JOE (3X DMG + INFINITE HP/AMMO)! ★';
       } else {
         this.veteranRank += 1;
         this.damageMult += 0.15;
-        this.upgradeTarget = 10000;
-        this.applyTierConfig('soldier', this.variantIndex, true);
+        this.upgradeTarget = 15000;
+        this.applyTierConfig('joe', this.variantIndex, true);
         this.promotionBannerTimer = 2.8;
-        this.promotionBannerText = `SOLDIER VETERAN RANK +${this.veteranRank}! (HP & DMG UP)`;
+        this.promotionBannerText = `OFFICER JOE LEGEND RANK +${this.veteranRank}!`;
       }
 
       if (audio) audio.playLevelUp();
@@ -183,6 +191,15 @@ export class Player {
 
   takeDamage(amount, particles, audio) {
     if (this.state === 'dead' || this.invulnTimer > 0) return;
+    if (this.config.infiniteHealth) {
+      this.hp = this.maxHp;
+      this.invulnTimer = 0.35;
+      if (particles) {
+        particles.spawnHitSparks(this.x, this.renderY - 55, '#ffd166', 8);
+        particles.spawnFloatingText(this.x, this.renderY - 95, 'INVINCIBLE!', '#ffd166');
+      }
+      return;
+    }
     this.hp = Math.max(0, this.hp - amount);
     this.invulnTimer = 0.65;
     this.flashTimer = 0.16;
@@ -274,6 +291,15 @@ export class Player {
     if (this.meleeArcTimer > 0) this.meleeArcTimer -= dt;
     if (this.promotionBannerTimer > 0) this.promotionBannerTimer -= dt;
     this.specialEnergy = Math.min(100, this.specialEnergy + dt * 18);
+
+    if (this.config.infiniteHealth) {
+      this.hp = this.maxHp;
+    }
+    if (this.config.infiniteAmmo) {
+      this.ammo = this.maxAmmo;
+      this.secAmmo = this.maxSecAmmo;
+      this.specialEnergy = 100;
+    }
 
     const anim = this.currentAnimator;
     if (!anim) return;
@@ -476,6 +502,11 @@ export class Player {
     const isSecondaryState = this.state === 'secondary';
 
     const consumeActiveAmmo = () => {
+      if (this.config.infiniteAmmo) {
+        this.ammo = this.maxAmmo;
+        this.secAmmo = this.maxSecAmmo;
+        return;
+      }
       if (isSecondaryState) {
         this.secAmmo = Math.max(0, this.secAmmo - 1);
       } else {
@@ -591,6 +622,15 @@ export class Player {
   }
 
   draw(ctx, cameraX) {
+    if (this.config.infiniteHealth) {
+      this.hp = this.maxHp;
+    }
+    if (this.config.infiniteAmmo) {
+      this.ammo = this.maxAmmo;
+      this.secAmmo = this.maxSecAmmo;
+      this.specialEnergy = 100;
+    }
+
     const anim = this.currentAnimator;
     if (!anim) return;
 

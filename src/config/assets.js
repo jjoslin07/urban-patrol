@@ -1,14 +1,15 @@
 // Complete CraftPix Asset Manifest for Urban Patrol
-// Progression: Tier 1 (Police) -> Tier 2 (SWAT) -> Tier 3 (Soldier)
+// Progression: Tier 1 (Police) -> Tier 2 (SWAT) -> Tier 3 (Soldier) -> Tier 4 (Officer Joe)
 
 export const FRAME_SIZE = 128;
 
-export const TIER_ORDER = ['police', 'swat', 'soldier'];
+export const TIER_ORDER = ['police', 'swat', 'soldier', 'joe'];
 
 export const TIER_THRESHOLDS = {
-  police: 1000,  // Collect $1,000 in Gold/Cash to upgrade Police -> SWAT
-  swat: 10000,   // Collect $10,000 to upgrade SWAT -> Soldier
-  soldier: 10000, // Every $10,000 after Soldier grants a Veteran Rank stat boost
+  police: 1000,   // Collect $1,000 in Gold/Cash to upgrade Police -> SWAT
+  swat: 10000,    // Collect $10,000 to upgrade SWAT -> Soldier
+  soldier: 15000, // Collect $15,000 to upgrade Soldier -> Officer Joe
+  joe: 15000,     // Veteran Rank bonus threshold
 };
 
 export const CHARACTER_TIERS = {
@@ -184,7 +185,7 @@ export const CHARACTER_TIERS = {
     tier: 3,
     id: 'soldier',
     label: 'TIER 3: ELITE SOLDIER',
-    nextLabel: 'MAX TIER (VETERAN BOOST)',
+    nextLabel: 'OFFICER JOE (GOD TIER)',
     variants: [
       {
         id: 'soldier_1',
@@ -244,6 +245,47 @@ export const CHARACTER_TIERS = {
           recharge:  { file: 'Recharge.png', frames: 7,  fps: 14, loop: false },
           hurt:      { file: 'Hurt.png',     frames: 3,  fps: 10, loop: false },
           dead:      { file: 'Dead.png',     frames: 4,  fps: 8,  loop: false },
+        },
+      },
+    ],
+  },
+
+  joe: {
+    tier: 4,
+    id: 'joe',
+    label: 'TIER 4: OFFICER JOE',
+    nextLabel: 'MAX TIER (LEGENDARY)',
+    variants: [
+      {
+        id: 'officer_joe',
+        name: 'Officer Joe (Tier 4 Legend)',
+        role: '3x Damage • Infinite HP & Ammo',
+        speed: 295,
+        runSpeed: 450,
+        maxHp: 999,
+        infiniteHealth: true,
+        infiniteAmmo: true,
+        maxAmmo: 20,
+        startReserveAmmo: 999,
+        maxReserveAmmo: 999,
+        maxSecAmmo: 12,
+        startSecReserveAmmo: 999,
+        maxSecReserveAmmo: 999,
+        primaryName: "Joe's Hand Cannon (3x DMG)",
+        secondaryName: "Joe's Street Sweeper Shotgun (3x DMG)",
+        basePath: 'assets/sprites/player/Joe',
+        anims: {
+          idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
+          walk:      { file: 'Walk.png',       frames: 8, fps: 12, loop: true },
+          run:       { file: 'Run.png',        frames: 8, fps: 16, loop: true },
+          jump:      { file: 'Jump.png',       frames: 8, fps: 14, loop: false },
+          primary:   { file: 'Shot_2.png',     frames: 4, fps: 24, loop: false, triggerFrame: 2, type: 'magnum',  damage: 150 },
+          secondary: { file: 'Shot_1.png',     frames: 7, fps: 22, loop: false, triggerFrame: 2, type: 'shotgun', damage: 200 },
+          melee:     { file: 'Recharge_2.png', frames: 8, fps: 22, loop: false, triggerFrame: 4, type: 'melee',   damage: 165, range: 110, meleeStyle: 'punch' },
+          grenade:   { file: 'Shot_2.png',     frames: 4, fps: 18, loop: false, triggerFrame: 2, type: 'grenade', damage: 300 },
+          recharge:  { file: 'Recharge_1.png', frames: 7, fps: 16, loop: false },
+          hurt:      { file: 'Hurt.png',       frames: 3, fps: 10, loop: false },
+          dead:      { file: 'Dead.png',       frames: 4, fps: 8,  loop: false },
         },
       },
     ],
@@ -473,7 +515,7 @@ export const ENEMY_ARCHETYPES = {
       walk:   { file: 'Walk.png',     frames: 7,  fps: 10, loop: true },
       run:    { file: 'Run.png',      frames: 8,  fps: 13, loop: true },
       attack: { file: 'Attack_1.png', frames: 6,  fps: 12, loop: false, triggerFrame: 3 },
-      hurt:   { file: 'Hurt.png',     frames: 5,  fps: 10, loop: false },
+      hurt:   { file: 'Hurt.png',     frames: 4,  fps: 10, loop: false },
       dead:   { file: 'Dead.png',     frames: 6,  fps: 8,  loop: false },
     },
   },
@@ -485,8 +527,8 @@ export const DISTRICTS = [
     name: 'District 1: Downtown Crime Strip',
     subtitle: 'Defeat enemies for Gold & Food — Every 15 kills drops a Supply Chest!',
     length: 9200,
-    groundTopY: 425,
-    groundBottomY: 520,
+    groundTopY: 486,
+    groundBottomY: 532,
     layers: [
       { src: 'assets/backgrounds/street-2d-game-backgrounds/png/1/layers/l1_background.png', speed: 0.05 },
       { src: 'assets/backgrounds/street-2d-game-backgrounds/png/1/layers/l2_clouds.png',     speed: 0.12, autoScroll: 8 },
@@ -504,8 +546,8 @@ export const DISTRICTS = [
     name: 'District 2: Midnight Neon Avenue',
     subtitle: 'Syndicate gunmen patrol the avenue — Every 15 kills spawns a Chest!',
     length: 9800,
-    groundTopY: 430,
-    groundBottomY: 520,
+    groundTopY: 492,
+    groundBottomY: 532,
     layers: [
       { src: 'assets/backgrounds/night-city-street-game-background-tiles/PNG/Background_01/Sky.png',        speed: 0.05 },
       { src: 'assets/backgrounds/night-city-street-game-background-tiles/PNG/Background_01/Background.png', speed: 0.35 },
@@ -520,8 +562,8 @@ export const DISTRICTS = [
     name: 'District 3: Quarantine Ruin Sector',
     subtitle: 'Contain the outbreak — Defeat 15 hostiles to earn a Supply Chest!',
     length: 10400,
-    groundTopY: 425,
-    groundBottomY: 520,
+    groundTopY: 494,
+    groundBottomY: 532,
     layers: [
       { src: 'assets/backgrounds/destroyed-city-parallax-backgrounds/png/1/layers/l1_background.png', speed: 0.05 },
       { src: 'assets/backgrounds/destroyed-city-parallax-backgrounds/png/1/layers/l2_hills.png',      speed: 0.2  },
@@ -538,8 +580,8 @@ export const DISTRICTS = [
     name: 'District 4: Ground Zero Outbreak',
     subtitle: 'Final push against infected riot squads and bio-mutants',
     length: 11000,
-    groundTopY: 425,
-    groundBottomY: 520,
+    groundTopY: 482,
+    groundBottomY: 532,
     layers: [
       { src: 'assets/backgrounds/war-2d-game-backgrounds/png/1/layers/l1_background.png', speed: 0.05 },
       { src: 'assets/backgrounds/war-2d-game-backgrounds/png/1/layers/l2_hills.png',      speed: 0.2  },
