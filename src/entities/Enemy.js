@@ -251,7 +251,17 @@ export class Enemy {
     ctx.fill();
 
     const scale = this.isBoss ? 1.95 : 1.65;
+    const missingSprite = !this.animator.images[this.animator.currentKey];
     this.animator.draw(ctx, sx, this.laneY, this.facingLeft, scale, this.flashTimer > 0);
+    if (missingSprite) {
+      // Label which enemy's asset failed to load so the broken path is findable
+      ctx.save();
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ff595e';
+      ctx.fillText(this.config.name, Math.round(sx), this.laneY - (this.isBoss ? 152 : 126));
+      ctx.restore();
+    }
 
     if (this.state !== 'dead') {
       const barW = this.isBoss ? 76 : 44;

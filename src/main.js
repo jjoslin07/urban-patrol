@@ -749,6 +749,11 @@ async function init() {
     preloadItemAssets(),
     preloadExplosionSprite(),
   ]);
+  // Pre-warm every district's background layers up front so switching
+  // districts never stalls the game loop mid-run.
+  for (const district of DISTRICTS) {
+    await background.loadDistrict(district);
+  }
   await loadDistrictStage(0);
 
   isReady = true;

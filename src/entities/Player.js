@@ -1,4 +1,4 @@
-import { CHARACTER_TIERS } from '../config/assets.js';
+import { CHARACTER_TIERS, TIER_ORDER, TIER_THRESHOLDS } from '../config/assets.js';
 import { Animator } from '../systems/SpriteSheet.js';
 import { Projectile } from './Projectile.js';
 
@@ -21,7 +21,7 @@ export class Player {
 
     this.totalGold = 0;
     this.upgradeGold = 0;
-    this.upgradeTarget = 1000; // $1,000 for Police -> SWAT, then $10,000 for SWAT -> Soldier
+    this.upgradeTarget = TIER_THRESHOLDS[this.tierKey]; // Gold needed to promote out of the current rank
 
     this.config = CHARACTER_TIERS.police.variants[0];
     this.hp = this.config.maxHp;
@@ -124,19 +124,8 @@ export class Player {
   setTierDirectly(tierKey, particles, audio) {
     if (!CHARACTER_TIERS[tierKey] || this.state === 'dead') return;
     this.applyTierConfig(tierKey, 0, true);
-    if (tierKey === 'police') {
-      this.upgradeGold = 0;
-      this.upgradeTarget = 1000;
-    } else if (tierKey === 'swat') {
-      this.upgradeGold = 0;
-      this.upgradeTarget = 10000;
-    } else if (tierKey === 'soldier') {
-      this.upgradeGold = 0;
-      this.upgradeTarget = 15000;
-    } else {
-      this.upgradeGold = 0;
-      this.upgradeTarget = 15000;
-    }
+    this.upgradeGold = 0;
+    this.upgradeTarget = TIER_THRESHOLDS[tierKey];
     if (particles) {
       particles.spawnHitSparks(this.x, this.laneY - 60, '#ffd166', 18);
       particles.spawnFloatingText(this.x, this.laneY - 115, this.config.name, '#ffd166');
@@ -156,25 +145,25 @@ export class Player {
     if (this.upgradeGold >= this.upgradeTarget) {
       this.upgradeGold -= this.upgradeTarget;
 
-      if (this.tierKey === 'police') {
-        this.upgradeTarget = 10000;
-        this.applyTierConfig('swat', 0, true);
-        this.promotionBannerTimer = 3.2;
-        this.promotionBannerText = 'PROMOTED TO TIER 2: METRO SWAT!';
-      } else if (this.tierKey === 'swat') {
-        this.upgradeTarget = 15000;
-        this.applyTierConfig('soldier', 0, true);
-        this.promotionBannerTimer = 3.2;
-        this.promotionBannerText = 'PROMOTED TO TIER 3: ELITE SOLDIER!';
-      } else if (this.tierKey === 'soldier') {
-        this.upgradeTarget = 15000;
-        this.applyTierConfig('joe', 0, true);
-        this.promotionBannerTimer = 3.6;
-        this.promotionBannerText = '★ PROMOTED TO TIER 4: OFFICER JOE (3X DMG + INFINITE HP/AMMO)! ★';
+      const nextKey = TIER_ORDER[TIER_ORDER.indexOf(this.tierKey) + 1];
+      if (nextKey) {
+        this.upgradeTarget = TIER_THRESHOLDS[nextKey];
+        this.applyTierConfig(nextKey, 0, true);
+        if (nextKey === 'swat') {
+          this.promotionBannerTimer = 3.2;
+          this.promotionBannerText = 'PROMOTED TO TIER 2: METRO SWAT!';
+        } else if (nextKey === 'soldier') {
+          this.promotionBannerTimer = 3.2;
+          this.promotionBannerText = 'PROMOTED TO TIER 3: ELITE SOLDIER!';
+        } else {
+          this.promotionBannerTimer = 3.6;
+          this.promotionBannerText = '★ PROMOTED TO TIER 4: OFFICER JOE (3X DMG + INFINITE HP/AMMO)! ★';
+        }
       } else {
+        // Officer Joe is the final rank — extra gold grants veteran rank bonuses
         this.veteranRank += 1;
         this.damageMult += 0.15;
-        this.upgradeTarget = 15000;
+        this.upgradeTarget = TIER_THRESHOLDS.joe;
         this.applyTierConfig('joe', this.variantIndex, true);
         this.promotionBannerTimer = 2.8;
         this.promotionBannerText = `OFFICER JOE LEGEND RANK +${this.veteranRank}!`;

@@ -37,7 +37,9 @@ export class Input {
           this.keys.add('MouseRight');
         }
       });
-      canvas.addEventListener('mouseup', (e) => {
+      // Listen on window (not just the canvas) so releasing a mouse button
+      // outside the canvas can't leave it "held" and cause stuck auto-fire.
+      window.addEventListener('mouseup', (e) => {
         if (e.button === 0) this.keys.delete('MouseLeft');
         if (e.button === 1) this.keys.delete('MouseMiddle');
         if (e.button === 2) this.keys.delete('MouseRight');

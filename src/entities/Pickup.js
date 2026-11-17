@@ -164,8 +164,8 @@ export class Pickup {
     const dy = player.laneY - this.laneY;
     const dist = Math.hypot(dx, dy);
 
-    // Slight magnetic pull when player is close
-    if (dist < 85 && this.offsetY === 0) {
+    // Slight magnetic pull when player is close (guard dist === 0 to avoid NaN)
+    if (dist > 0.001 && dist < 85 && this.offsetY === 0) {
       this.x += (dx / dist) * 180 * dt;
       this.laneY += (dy / dist) * 120 * dt;
     }

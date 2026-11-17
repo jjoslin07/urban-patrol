@@ -88,7 +88,30 @@ export class Animator {
 
   draw(ctx, x, y, facingLeft = false, scale = 1.65, flashWhite = false) {
     const img = this.images[this.currentKey];
-    if (!img) return;
+    if (!img) {
+      // Fallback placeholder: a missing sprite must never render as an
+      // invisible (but still active) entity.
+      const drawW = FRAME_SIZE * scale;
+      const drawH = FRAME_SIZE * scale;
+      ctx.save();
+      ctx.translate(Math.round(x), Math.round(y));
+      if (facingLeft) ctx.scale(-1, 1);
+      ctx.fillStyle = 'rgba(255, 89, 94, 0.22)';
+      ctx.strokeStyle = '#ff595e';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.fillRect(-drawW / 2, -drawH, drawW, drawH);
+      ctx.strokeRect(-drawW / 2, -drawH, drawW, drawH);
+      ctx.setLineDash([]);
+      ctx.restore();
+      ctx.save();
+      ctx.fillStyle = '#ff595e';
+      ctx.font = 'bold 11px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('MISSING SPRITE', Math.round(x), Math.round(y - drawH / 2));
+      ctx.restore();
+      return;
+    }
 
     const drawW = FRAME_SIZE * scale;
     const drawH = FRAME_SIZE * scale;
