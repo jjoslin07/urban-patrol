@@ -19,7 +19,7 @@ export async function preloadItemAssets() {
 }
 
 export class Chest {
-  constructor(x, laneY, chestIndex = 0) {
+  constructor(x, laneY, chestIndex = 0, district = null) {
     this.x = x;
     this.laneY = laneY;
     const cfg = ITEM_ASSETS.chests[chestIndex % ITEM_ASSETS.chests.length];
@@ -30,8 +30,17 @@ export class Chest {
     this.bobTimer = Math.random() * Math.PI * 2;
     this.openPopScale = 1;
 
+    // Keep chest loot on the street: clamp to this district's ground band
+    // (falls back to the original hardcoded band when no district is passed)
+    this.groundTopY = district ? district.groundTopY + 4 : 428;
+    this.groundBottomY = district ? district.groundBottomY - 4 : 518;
+
     loadImage(cfg.full).then((img) => { this.fullImg = img; });
     loadImage(cfg.empty).then((img) => { this.emptyImg = img; });
+  }
+
+  clampToStreet(y) {
+    return Math.max(this.groundTopY, Math.min(this.groundBottomY, y));
   }
 
   update(dt, player, pickups, particles, audio) {
@@ -68,7 +77,7 @@ export class Chest {
       new Pickup({
         kind: 'gold',
         x: this.x - 22,
-        laneY: Math.max(428, Math.min(518, this.laneY)),
+        laneY: this.clampToStreet(this.laneY),
         config: { ...baseCfg, value: this.config.value * 4 },
         popVy: -195,
       })
@@ -80,7 +89,7 @@ export class Chest {
         new Pickup({
           kind: 'ammo',
           x: this.x + 22,
-          laneY: Math.min(518, this.laneY + 8),
+          laneY: this.clampToStreet(this.laneY + 8),
           config: aCfg,
           popVy: -205,
         })
@@ -91,7 +100,7 @@ export class Chest {
         new Pickup({
           kind: 'food',
           x: this.x + 22,
-          laneY: Math.min(518, this.laneY + 8),
+          laneY: this.clampToStreet(this.laneY + 8),
           config: fCfg,
           popVy: -205,
         })

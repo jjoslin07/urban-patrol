@@ -527,6 +527,7 @@ export const DISTRICTS = [
     name: 'District 1: Downtown Crime Strip',
     subtitle: 'Defeat enemies for Gold & Food — Every 15 kills drops a Supply Chest!',
     length: 9200,
+    difficulty: 1.0, // Enemy HP/damage multiplier for this stage (tune here)
     groundTopY: 486,
     groundBottomY: 532,
     layers: [
@@ -546,6 +547,7 @@ export const DISTRICTS = [
     name: 'District 2: Midnight Neon Avenue',
     subtitle: 'Syndicate gunmen patrol the avenue — Every 15 kills spawns a Chest!',
     length: 9800,
+    difficulty: 1.18,
     groundTopY: 492,
     groundBottomY: 532,
     layers: [
@@ -562,6 +564,7 @@ export const DISTRICTS = [
     name: 'District 3: Quarantine Ruin Sector',
     subtitle: 'Contain the outbreak — Defeat 15 hostiles to earn a Supply Chest!',
     length: 10400,
+    difficulty: 1.36,
     groundTopY: 494,
     groundBottomY: 532,
     layers: [
@@ -580,6 +583,7 @@ export const DISTRICTS = [
     name: 'District 4: Ground Zero Outbreak',
     subtitle: 'Final push against infected riot squads and bio-mutants',
     length: 11000,
+    difficulty: 1.54,
     groundTopY: 482,
     groundBottomY: 532,
     layers: [

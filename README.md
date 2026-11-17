@@ -53,7 +53,7 @@ Battle through 4 long-form (`9,200px+`) side-scrolling city stages with distinct
 ---
 
 ## 🧪 Known Beta Limitations & Upcoming Roadmap
-- Balancing tweaks for enemy HP scaling and ammo pack drop rates across Districts 3 & 4.
+- Enemy HP/damage scaling is now tunable per district via `DISTRICTS[].difficulty` in `src/config/assets.js`; ammo pack drop rates for Districts 3 & 4 still need balancing tweaks.
 - Additional boss attack patterns and stage hazards planned for upcoming releases.
 - Local high-score & progression persistence (`localStorage`) coming in `v1.1.0`.
 
@@ -98,4 +98,4 @@ Start a local static HTTP server from the project root:
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080` in your browser.
+Open `http://localhost:8080` in your browser. Add `?debug=1` to the URL (e.g. `http://localhost:8080/?debug=1`) to show the rank-preview toolbar for balancing/testing.
