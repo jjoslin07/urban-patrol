@@ -497,12 +497,12 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'durk',
-        name: 'Durk (Memphis)',
+        name: 'Durk (Olock)',
         role: 'Rapid Street Mag & Double Nine',
         speed: 310, runSpeed: 470, maxHp: 450,
         maxAmmo: 24, startReserveAmmo: 96, maxReserveAmmo: 260,
         maxSecAmmo: 10, startSecReserveAmmo: 30, maxSecReserveAmmo: 80,
-        primaryName: 'Memphis Mag', secondaryName: 'Double Nine',
+        primaryName: 'Olock Mag', secondaryName: 'Double Nine',
         basePath: 'assets/sprites/player/Durk',
         anims: {
           idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
