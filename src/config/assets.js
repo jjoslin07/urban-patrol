@@ -474,12 +474,12 @@ export const CHARACTER_TIERS = {
     variants: [
       {
         id: 'curtis',
-        name: 'Curtis (O Block)',
+        name: 'Curtis (South Side Queens)',
         role: 'White Tank & Pump Action',
         speed: 300, runSpeed: 460, maxHp: 480,
         maxAmmo: 22, startReserveAmmo: 90, maxReserveAmmo: 240,
         maxSecAmmo: 10, startSecReserveAmmo: 30, maxSecReserveAmmo: 80,
-        primaryName: 'O Block 9', secondaryName: 'White Tank Pump',
+        primaryName: 'Queens 9', secondaryName: 'White Tank Pump',
         basePath: 'assets/sprites/player/Curtis',
         anims: {
           idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
@@ -497,12 +497,12 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'durk',
-        name: 'Durk (Nightside)',
+        name: 'Durk (Memphis)',
         role: 'Rapid Street Mag & Double Nine',
         speed: 310, runSpeed: 470, maxHp: 450,
         maxAmmo: 24, startReserveAmmo: 96, maxReserveAmmo: 260,
         maxSecAmmo: 10, startSecReserveAmmo: 30, maxSecReserveAmmo: 80,
-        primaryName: 'Nightside Mag', secondaryName: 'Double Nine',
+        primaryName: 'Memphis Mag', secondaryName: 'Double Nine',
         basePath: 'assets/sprites/player/Durk',
         anims: {
           idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
@@ -520,12 +520,12 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'roach',
-        name: 'Roach (Gully)',
-        role: 'Heavy Gully Mag & Tail Whip Pump',
+        name: 'Roach (Lakewood)',
+        role: 'Heavy Lakewood Mag & Tail Whip Pump',
         speed: 285, runSpeed: 445, maxHp: 540,
         maxAmmo: 20, startReserveAmmo: 80, maxReserveAmmo: 220,
         maxSecAmmo: 12, startSecReserveAmmo: 36, maxSecReserveAmmo: 90,
-        primaryName: 'Gully Mag 9', secondaryName: 'Tail Whip Pump',
+        primaryName: 'Lakewood Mag 9', secondaryName: 'Tail Whip Pump',
         basePath: 'assets/sprites/player/Roach',
         anims: {
           idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
@@ -543,7 +543,7 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'shiesty',
-        name: 'Shiesty (Designer)',
+        name: 'Shiesty (Memphis)',
         role: 'Designer 9 & Suit Blaster',
         speed: 320, runSpeed: 485, maxHp: 430,
         maxAmmo: 26, startReserveAmmo: 104, maxReserveAmmo: 280,
@@ -566,12 +566,12 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'von',
-        name: 'Von (Ore City)',
-        role: 'Ore City Magnum & Green Cap Slugger',
+        name: 'Von (O Block)',
+        role: 'O Block Magnum & Green Cap Slugger',
         speed: 295, runSpeed: 455, maxHp: 510,
         maxAmmo: 20, startReserveAmmo: 80, maxReserveAmmo: 220,
         maxSecAmmo: 12, startSecReserveAmmo: 36, maxSecReserveAmmo: 90,
-        primaryName: 'Ore City Magnum', secondaryName: 'Green Cap Slugger',
+        primaryName: 'O Block Magnum', secondaryName: 'Green Cap Slugger',
         basePath: 'assets/sprites/player/Von',
         anims: {
           idle:      { file: 'Idle.png',       frames: 6, fps: 8,  loop: true },
@@ -589,7 +589,7 @@ export const CHARACTER_TIERS = {
       },
       {
         id: 'von2',
-        name: 'Von 2.0 (Dreads)',
+        name: 'Von 2.0 (O Block Dreads)',
         role: 'Dread 9 & Night Slide Pump',
         speed: 305, runSpeed: 465, maxHp: 470,
         maxAmmo: 22, startReserveAmmo: 88, maxReserveAmmo: 240,
