@@ -28,7 +28,7 @@ export class Enemy {
     this.score = cfg.score;
     this.isBoss = Boolean(cfg.isBoss);
 
-    this.animator = new Animator(cfg.basePath, cfg.anims);
+    this.animator = new Animator(cfg.basePath, cfg.anims, cfg.frameSize || 128);
     this.animator.preload();
 
     this.state = 'idle';
@@ -250,7 +250,7 @@ export class Enemy {
     ctx.ellipse(sx, this.laneY, radiusX, 8, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    const scale = this.isBoss ? 1.95 : 1.65;
+    const scale = this.config.scale || (this.isBoss ? 1.95 : 1.65);
     const missingSprite = !this.animator.images[this.animator.currentKey];
     this.animator.draw(ctx, sx, this.laneY, this.facingLeft, scale, this.flashTimer > 0);
     if (missingSprite) {

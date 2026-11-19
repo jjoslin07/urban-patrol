@@ -10,11 +10,14 @@ Welcome to the first public beta release of **Metro Force : Urban Patrol**, a 2D
 
 ## ✨ Key Features in v1.0.0 (Beta)
 
-### 🎖️ 3-Tier Officer Rank Progression
+### 🎖️ 6-Tier Officer Rank Progression
 Collect cash & gold dropped by defeated enemies to earn automatic field promotions:
 - **Lv.1 Metro Police** *(Starting Rank)* — Armed with a 25 DMG service pistol, secondary taser/baton, and 3 switchable officer skins (`[V]`).
 - **Lv.2 SWAT Tactical Unit** *(Unlocks at **$1,000**)* — Upgraded armor (`165 HP`), rapid-fire tactical carbines, breaching shotguns, and 3 SWAT skins.
-- **Lv.3 Military Spec-Ops Soldier** *(Unlocks at **$10,000**)* — Heavy armor (`220 HP`), high-capacity assault rifles, heavy secondary firearms, and veteran rank bonuses every **$10,000** thereafter.
+- **Lv.3 Military Spec-Ops Soldier** *(Unlocks at **$10,000**)* — Heavy armor (`220 HP`), high-capacity assault rifles, heavy secondary firearms, and 3 spec-ops skins.
+- **Lv.4 Cyber Division** *(Unlocks at **$15,000**)* — Cybernetic armor (`270–320 HP`), neon sidearms & pulse cannons, cyber scatter rigs, and 3 cyber skins (`[V]` — `Rider Vex`, `Glitch`, `Unit-7 Cyborg`).
+- **Lv.5 Officer Joe** *(Unlocks at **$25,000**)* — Legend rank: `999 HP`, infinite ammo, and 3x damage, with 2 switchable Joe legends (`[V]` — `Officer Joe`, `Officer Joe 2`).
+- **Lv.6 Special Characters** *(Unlocks at **$35,000**)* — Legendary roster of 6 custom characters (`[V]` to switch — `Curtis`, `Durk`, `Roach`, `Shiesty`, `Von`, `Von 2.0`), plus Legend Rank bonuses (extra HP, +15% damage) every **$35,000** thereafter.
 
 ### 🔫 Dual-Weapon Combat, Melee & Explosives
 - **Primary Weapon (`Left-Click` / `Hold J`):** Rapid-fire primary weapon with a dedicated **Primary Ammo & Reserve Meter (`PRI`)**.
@@ -22,12 +25,14 @@ Collect cash & gold dropped by defeated enemies to earn automatic field promotio
 - **Close-Quarters Punch / Kick (`F`, `E`, or `L`):** Zero-ammo melee strike with forward lunge, shockwave arc, and heavy knockback—ensuring you're never defenseless when out of ammo.
 - **Frag Grenades (`Middle-Click` / `G`):** Arc-thrown explosive grenades with area-of-effect blast damage and recharge meter.
 
-### 🌆 4 Multi-Layer Parallax Urban Districts
-Battle through 4 long-form (`9,200px+`) side-scrolling city stages with distinct enemy factions and end-of-stage bosses:
+### 🌆 6 Multi-Layer Parallax Urban Districts
+Battle through 6 long-form (`9,200px+`) side-scrolling city stages with distinct enemy factions and end-of-stage bosses:
 1. **District 1 — Downtown Crime Wave:** Street Brawlers, Bandits, and Gangster Bosses.
 2. **District 2 — Neon Night Syndicate:** Tommy-Gun Mobsters, Armed Thugs, and Syndicate Enforcers.
 3. **District 3 — Quarantine Outbreak Zone:** Urban Zombies, Infected Police, and Bio-Mutants.
 4. **District 4 — Ruined Warfront Sector:** High-density mixed factions and Toxic Mutant Bosses.
+5. **District 5 — Neon Cyber Grid:** K9 muggers, synth-cops, street drones, and the Neon Titan boss.
+6. **District 6 — Grey Industrial Sector:** Foundry gangs, enforcer copters, and the Security Cyborg boss.
 
 ### 📦 Combat Loot & Kill-Streak Supply Chests
 - **Enemy Loot Drops:** Enemies drop `0–2` items on defeat (Gold/Cash, Food HP restores, and Cyberpunk Ammo Packs), dynamically prioritizing ammo drops when your reserves run low.
@@ -60,18 +65,20 @@ Battle through 4 long-form (`9,200px+`) side-scrolling city stages with distinct
 **Full Changelog**: https://github.com/jjoslin07/urban-patrol/commits/beta
 
 ## Features
-- **3-Tier Rank Progression:**
-  - **Lv.1 Metro Police** ➔ Collect **$1,000** to promote to **Lv.2 SWAT Tactical Unit** ➔ Collect **$10,000** to promote to **Lv.3 Military Spec-Ops Soldier** (each with multiple switchable character skins via `V`).
+- **6-Tier Rank Progression:**
+  - **Lv.1 Metro Police** ➔ **$1,000** ➔ **Lv.2 SWAT** ➔ **$10,000** ➔ **Lv.3 Spec-Ops Soldier** ➔ **$15,000** ➔ **Lv.4 Cyber Division** ➔ **$25,000** ➔ **Lv.5 Officer Joe** (2 switchable Joe legends) ➔ **$35,000** ➔ **Lv.6 Special Characters** (each rank with multiple switchable character skins via `V`; Officer Joe adds 3x damage and infinite HP/ammo; Special Characters adds 6 custom legends, with Legend Rank bonuses every **$35,000** thereafter).
 - **Dual Weapon & Ammo System + Close-Quarters Melee:**
   - **Primary Weapon (`Left-Click` / `Hold J`):** Rapid-fire primary sidearm/rifle with dedicated Primary Ammo & Reserve pool (`PRI`).
   - **Secondary Weapon (`Right-Click` / `Hold K`):** Heavy secondary firearm (Shotgun, Heavy Rifle, Taser/Baton) with dedicated Secondary Ammo & Reserve pool (`SEC`).
   - **Punch / Kick Melee (`F`, `E`, or `L`):** Zero-ammo close-quarters strike with forward lunge and knockback.
   - **Frag Grenade (`Middle-Click` / `G`):** High-damage explosive arc grenade.
-- **4 Multi-Layer Parallax Urban Districts:**
+- **6 Multi-Layer Parallax Urban Districts:**
   - *District 1: Downtown Crime Wave*
   - *District 2: Neon Night Syndicate*
   - *District 3: Quarantine Outbreak Zone*
   - *District 4: Ruined Warfront Sector*
+  - *District 5: Neon Cyber Grid*
+  - *District 6: Grey Industrial Sector*
 - **Dynamic Combat Loot & Supply Chests:**
   - Defeated enemies drop `0–2` random pickups (Cash/Gold, Food HP items, or Cyberpunk Ammo Packs).
   - Every **15 enemy kills** air-drops a **Supply Chest** onto the street.

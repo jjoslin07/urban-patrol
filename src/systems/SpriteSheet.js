@@ -20,9 +20,10 @@ export function loadImage(src) {
 }
 
 export class Animator {
-  constructor(basePath, animsConfig) {
+  constructor(basePath, animsConfig, frameSize = 128) {
     this.basePath = basePath;
     this.animsConfig = animsConfig;
+    this.frameSize = frameSize;
     this.images = {};
     this.currentKey = 'idle';
     this.frameIndex = 0;
@@ -91,8 +92,8 @@ export class Animator {
     if (!img) {
       // Fallback placeholder: a missing sprite must never render as an
       // invisible (but still active) entity.
-      const drawW = FRAME_SIZE * scale;
-      const drawH = FRAME_SIZE * scale;
+      const drawW = this.frameSize * scale;
+      const drawH = this.frameSize * scale;
       ctx.save();
       ctx.translate(Math.round(x), Math.round(y));
       if (facingLeft) ctx.scale(-1, 1);
@@ -113,9 +114,9 @@ export class Animator {
       return;
     }
 
-    const drawW = FRAME_SIZE * scale;
-    const drawH = FRAME_SIZE * scale;
-    const sx = this.frameIndex * FRAME_SIZE;
+    const drawW = this.frameSize * scale;
+    const drawH = this.frameSize * scale;
+    const sx = this.frameIndex * this.frameSize;
     const sy = 0;
 
     ctx.save();
@@ -132,8 +133,8 @@ export class Animator {
       img,
       sx,
       sy,
-      FRAME_SIZE,
-      FRAME_SIZE,
+      this.frameSize,
+      this.frameSize,
       -drawW / 2,
       -drawH,
       drawW,

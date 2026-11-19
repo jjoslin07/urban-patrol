@@ -122,8 +122,12 @@ export function drawHUD(ctx, canvas, state) {
       : player.tierKey === 'swat'
       ? 'GOLD UPGRADE: SWAT ➔ ELITE SOLDIER'
       : player.tierKey === 'soldier'
-      ? 'GOLD UPGRADE: SOLDIER ➔ OFFICER JOE'
-      : `OFFICER JOE (LEGEND RANK ${player.veteranRank})`;
+      ? 'GOLD UPGRADE: SOLDIER ➔ CYBER DIVISION'
+      : player.tierKey === 'cyber'
+      ? 'GOLD UPGRADE: CYBER ➔ OFFICER JOE'
+      : player.tierKey === 'joe'
+      ? 'GOLD UPGRADE: OFFICER JOE ➔ SPECIAL'
+      : `SPECIAL ROSTER (LEGEND RANK ${player.veteranRank})`;
   ctx.fillText(upgradeTitle, canvas.width / 2, 31);
 
   // Gold Progress Bar Track

@@ -54,7 +54,7 @@ export class Player {
     const promises = [];
     for (const tier of Object.values(CHARACTER_TIERS)) {
       for (const variant of tier.variants) {
-        const anim = new Animator(variant.basePath, variant.anims);
+        const anim = new Animator(variant.basePath, variant.anims, variant.frameSize || 128);
         this.animators[variant.id] = anim;
         promises.push(anim.preload());
       }
@@ -155,18 +155,25 @@ export class Player {
         } else if (nextKey === 'soldier') {
           this.promotionBannerTimer = 3.2;
           this.promotionBannerText = 'PROMOTED TO TIER 3: ELITE SOLDIER!';
-        } else {
+        } else if (nextKey === 'cyber') {
+          this.promotionBannerTimer = 3.2;
+          this.promotionBannerText = 'PROMOTED TO TIER 4: CYBER DIVISION!';
+        } else if (nextKey === 'joe') {
           this.promotionBannerTimer = 3.6;
-          this.promotionBannerText = '★ PROMOTED TO TIER 4: OFFICER JOE (3X DMG + INFINITE HP/AMMO)! ★';
+          this.promotionBannerText = '★ PROMOTED TO TIER 5: OFFICER JOE (3X DMG + INFINITE HP/AMMO)! ★';
+        } else if (nextKey === 'special') {
+          this.promotionBannerTimer = 3.6;
+          this.promotionBannerText = '★ PROMOTED TO TIER 6: SPECIAL CHARACTERS! ★';
         }
       } else {
-        // Officer Joe is the final rank — extra gold grants veteran rank bonuses
+        // Final rank — extra gold grants legend rank bonuses
+        const lastKey = TIER_ORDER[TIER_ORDER.length - 1];
         this.veteranRank += 1;
         this.damageMult += 0.15;
-        this.upgradeTarget = TIER_THRESHOLDS.joe;
-        this.applyTierConfig('joe', this.variantIndex, true);
+        this.upgradeTarget = TIER_THRESHOLDS[lastKey];
+        this.applyTierConfig(lastKey, this.variantIndex, true);
         this.promotionBannerTimer = 2.8;
-        this.promotionBannerText = `OFFICER JOE LEGEND RANK +${this.veteranRank}!`;
+        this.promotionBannerText = `LEGEND RANK +${this.veteranRank}!`;
       }
 
       if (audio) audio.playLevelUp();
@@ -634,7 +641,7 @@ export class Player {
     ctx.fill();
     ctx.restore();
 
-    anim.draw(ctx, sx, this.renderY, this.facingLeft, 1.65, this.flashTimer > 0);
+    anim.draw(ctx, sx, this.renderY, this.facingLeft, this.config.renderScale || 1.65, this.flashTimer > 0);
 
     // Draw crisp Punch / Kick shockwave arc during melee strike!
     if (this.meleeArcTimer > 0) {
