@@ -46,6 +46,8 @@ export class Player {
     this.flashTimer = 0;
     this.emptyClickTimer = 0;
     this.meleeArcTimer = 0;
+    this.crouchFactor = 0;
+    this.isCrouching = false;
     this.promotionBannerTimer = 0;
     this.promotionBannerText = '';
   }
@@ -325,6 +327,15 @@ export class Player {
       }
     }
 
+    // CROUCH DISABLED (parked) — uncomment to re-enable. With the driver off,
+    // crouchFactor stays 0 / isCrouching stays false, so the crouch-derived
+    // slowdown, squash render, muzzle drop, and dodge checks are inert no-ops.
+    // const crouchTarget = this.isGrounded && input.isDown('KeyC') ? 1 : 0;
+    // this.crouchFactor += (crouchTarget - this.crouchFactor) * Math.min(1, dt * 16);
+    // if (crouchTarget === 0 && this.crouchFactor < 0.03) this.crouchFactor = 0;
+    // if (crouchTarget === 1 && this.crouchFactor > 0.97) this.crouchFactor = 1;
+    // this.isCrouching = this.crouchFactor > 0.5;
+
     const lockedStates = ['primary', 'secondary', 'melee', 'grenade', 'recharge', 'hurt'];
     if (lockedStates.includes(this.state)) {
       if (this.state === 'primary' || this.state === 'secondary') {
@@ -468,8 +479,9 @@ export class Player {
     if (dx < 0) this.facingLeft = true;
     if (dx > 0) this.facingLeft = false;
 
-    const isRunning = input.isDown('ShiftLeft', 'ShiftRight') && dx !== 0;
-    const moveSpeed = isRunning ? this.config.runSpeed : this.config.speed;
+    const isRunning = input.isDown('ShiftLeft', 'ShiftRight') && dx !== 0 && !this.isCrouching;
+    const crouchSlow = 1 - 0.45 * this.crouchFactor; // ~55% speed at full crouch
+    const moveSpeed = (isRunning ? this.config.runSpeed : this.config.speed) * crouchSlow;
 
     this.x += dx * moveSpeed * dt;
     this.laneY += dy * (moveSpeed * 0.58) * dt;
@@ -493,7 +505,7 @@ export class Player {
   executeAttackTrigger(cfg, projectiles, enemies, particles, audio, bounds) {
     const dir = this.facingLeft ? -1 : 1;
     const muzzleX = this.x + dir * 48;
-    const muzzleY = this.renderY - 62;
+    const muzzleY = this.renderY - 62 * (1 - 0.45 * this.crouchFactor); // muzzle drops while crouched
     const scaledDamage = Math.round(cfg.damage * this.damageMult);
     const isSecondaryState = this.state === 'secondary';
 
@@ -641,7 +653,7 @@ export class Player {
     ctx.fill();
     ctx.restore();
 
-    anim.draw(ctx, sx, this.renderY, this.facingLeft, this.config.renderScale || 1.65, this.flashTimer > 0);
+    anim.draw(ctx, sx, this.renderY, this.facingLeft, this.config.renderScale || 1.65, this.flashTimer > 0, 1 - 0.42 * this.crouchFactor);
 
     // Draw crisp Punch / Kick shockwave arc during melee strike!
     if (this.meleeArcTimer > 0) {
@@ -651,7 +663,7 @@ export class Player {
       ctx.lineWidth = 4;
       ctx.beginPath();
       const arcX = sx + dir * 32;
-      const arcY = this.renderY - 56;
+      const arcY = this.renderY - 56 * (1 - 0.45 * this.crouchFactor);
       const startAngle = this.facingLeft ? Math.PI * 0.65 : -Math.PI * 0.35;
       const endAngle = this.facingLeft ? Math.PI * 1.35 : Math.PI * 0.35;
       ctx.arc(arcX, arcY, 34, startAngle, endAngle);

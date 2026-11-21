@@ -87,13 +87,13 @@ export class Animator {
     }
   }
 
-  draw(ctx, x, y, facingLeft = false, scale = 1.65, flashWhite = false) {
+  draw(ctx, x, y, facingLeft = false, scale = 1.65, flashWhite = false, yScale = 1) {
     const img = this.images[this.currentKey];
     if (!img) {
       // Fallback placeholder: a missing sprite must never render as an
       // invisible (but still active) entity.
       const drawW = this.frameSize * scale;
-      const drawH = this.frameSize * scale;
+      const drawH = this.frameSize * scale * yScale;
       ctx.save();
       ctx.translate(Math.round(x), Math.round(y));
       if (facingLeft) ctx.scale(-1, 1);
@@ -115,7 +115,7 @@ export class Animator {
     }
 
     const drawW = this.frameSize * scale;
-    const drawH = this.frameSize * scale;
+    const drawH = this.frameSize * scale * yScale; // yScale < 1 = crouch squash (feet stay planted)
     const sx = this.frameIndex * this.frameSize;
     const sy = 0;
 

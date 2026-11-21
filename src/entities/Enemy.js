@@ -239,7 +239,8 @@ export class Enemy {
         distX >= -15 &&
         distX <= this.config.attackRange + 14 &&
         distLane <= 36 &&
-        !isPlayerHighJumping
+        !isPlayerHighJumping &&
+        !player.isCrouching // crouched profile is below the melee reach line
       ) {
         player.takeDamage(this.damage, particles, audio);
       } else {

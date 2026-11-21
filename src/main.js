@@ -325,7 +325,8 @@ function updateProjectiles(dt) {
       const hitX = Math.abs(proj.x - player.x) < 24;
       const hitLane = Math.abs(proj.laneY - player.laneY) < 28;
       const dodgedByJump = player.jumpOffset < -42;
-      if (hitX && hitLane && !dodgedByJump) {
+      const dodgedByCrouch = player.isCrouching; // head drops below the bullet line
+      if (hitX && hitLane && !dodgedByJump && !dodgedByCrouch) {
         proj.active = false;
         player.takeDamage(proj.damage, particles, audio);
       }
