@@ -326,7 +326,7 @@ export const CHARACTER_TIERS = {
         maxAmmo: 24, startReserveAmmo: 72, maxReserveAmmo: 170,
         maxSecAmmo: 11, startSecReserveAmmo: 33, maxSecReserveAmmo: 90,
         primaryName: 'Neon Sidearm', secondaryName: 'Scatter Rig',
-        frameSize: 48, renderScale: 4.4,
+        frameSize: 48, renderScale: 3.11,
         basePath: 'assets/sprites/player/cyberpunk-characters-pixel-art/1 Biker',
         anims: {
           idle:      { file: 'Biker_idle.png',        frames: 4, fps: 8,  loop: true },
@@ -350,7 +350,7 @@ export const CHARACTER_TIERS = {
         maxAmmo: 26, startReserveAmmo: 78, maxReserveAmmo: 170,
         maxSecAmmo: 11, startSecReserveAmmo: 33, maxSecReserveAmmo: 90,
         primaryName: 'Rapid Mag', secondaryName: 'Shock Spread',
-        frameSize: 48, renderScale: 4.4,
+        frameSize: 48, renderScale: 3.11,
         basePath: 'assets/sprites/player/cyberpunk-characters-pixel-art/2 Punk',
         anims: {
           idle:      { file: 'Punk_idle.png',         frames: 4, fps: 8,  loop: true },
@@ -374,7 +374,7 @@ export const CHARACTER_TIERS = {
         maxAmmo: 22, startReserveAmmo: 66, maxReserveAmmo: 170,
         maxSecAmmo: 12, startSecReserveAmmo: 36, maxSecReserveAmmo: 96,
         primaryName: 'Pulse Cannon', secondaryName: 'Rail Spread',
-        frameSize: 48, renderScale: 4.4,
+        frameSize: 48, renderScale: 3.02,
         basePath: 'assets/sprites/player/cyberpunk-characters-pixel-art/3 Cyborg',
         anims: {
           idle:      { file: 'Cyborg_idle.png',       frames: 4, fps: 8,  loop: true },
@@ -851,7 +851,7 @@ export const ENEMY_ARCHETYPES = {
     score: 110,
     attackRange: 66,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.53,
     basePath: 'assets/sprites/enemies/city-enemies-pixel-art/1',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4,  fps: 8,  loop: true },
@@ -870,7 +870,7 @@ export const ENEMY_ARCHETYPES = {
     score: 125,
     attackRange: 66,
     frameSize: 48,
-    scale: 4.4,
+    scale: 3.62,
     basePath: 'assets/sprites/enemies/city-enemies-pixel-art/2',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },
@@ -889,7 +889,7 @@ export const ENEMY_ARCHETYPES = {
     score: 140,
     attackRange: 68,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.39,
     basePath: 'assets/sprites/enemies/city-enemies-pixel-art/3',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },
@@ -966,7 +966,7 @@ export const ENEMY_ARCHETYPES = {
     score: 180,
     attackRange: 70,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.39,
     basePath: 'assets/sprites/enemies/police-cyberpunk-characters/2 Sergeant',
     anims: {
       idle:   { file: 'Idle.png',    frames: 4, fps: 8,  loop: true },
@@ -985,7 +985,7 @@ export const ENEMY_ARCHETYPES = {
     score: 150,
     attackRange: 68,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.53,
     basePath: 'assets/sprites/enemies/police-cyberpunk-characters/4 Patrol',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },
@@ -1067,7 +1067,7 @@ export const ENEMY_ARCHETYPES = {
     score: 115,
     attackRange: 66,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.39,
     basePath: 'assets/sprites/enemies/industrial-zone-enemies/1 Worker',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },
@@ -1087,7 +1087,7 @@ export const ENEMY_ARCHETYPES = {
     ranged: true,
     attackRange: 340,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.68,
     basePath: 'assets/sprites/enemies/industrial-zone-enemies/2 Specialist',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },
@@ -1106,7 +1106,7 @@ export const ENEMY_ARCHETYPES = {
     score: 150,
     attackRange: 70,
     frameSize: 48,
-    scale: 4.4,
+    scale: 4.39,
     basePath: 'assets/sprites/enemies/industrial-zone-enemies/3 Heaver',
     anims: {
       idle:   { file: 'Idle.png',   frames: 4, fps: 8,  loop: true },

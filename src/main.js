@@ -139,9 +139,10 @@ function populateLongLevel(district) {
   const difficulty = district.difficulty || 1 + currentDistrictIndex * 0.18;
   const pool = district.enemyPool;
 
-  // Populate enemies along the long 9,200px+ street (spaced every ~400-480px in 1-3 enemy groups)
+  // Populate enemies along the long 9,200px+ street in 1-3 enemy groups.
+  // Density is 1.5x the original spacing (~260-333px between groups) for heavier pressure.
   // Zero pre-spawned items or chests on the street — all loot & chests come from defeating enemies!
-  for (let x = 620; x < levelLen - 620; x += 390 + Math.floor(Math.random() * 110)) {
+  for (let x = 620; x < levelLen - 620; x += (390 + Math.floor(Math.random() * 110)) / 1.5) {
     const roll = Math.random();
     const groupSize = roll < 0.35 ? 1 : roll < 0.82 ? 2 : 3;
     for (let i = 0; i < groupSize; i++) {

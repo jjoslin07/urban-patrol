@@ -124,6 +124,11 @@ export class Enemy {
     if (!this.aggro && absDx < 540) {
       this.aggro = true;
     }
+    // De-aggro if the player breaks away — lets old pursuers return to patrol
+    // instead of swarming the player from behind forever.
+    if (this.aggro && absDx > 950) {
+      this.aggro = false;
+    }
 
     if (!this.aggro) {
       // Casual street patrol near homeX
@@ -180,8 +185,15 @@ export class Enemy {
       moveY = Math.sign(dy);
     }
 
-    const isChasingFast = absDx > 260 && !this.config.ranged;
-    const curSpeed = isChasingFast ? this.speed * 1.2 : this.speed;
+    // Pursuit pressure: the farther the player is, the harder enemies press
+    // (up to 3x base speed). This lets enemies catch up from behind as well,
+    // so they attack from both directions instead of only ahead.
+    let chaseBoost = 1;
+    if (absDx > 160) {
+      chaseBoost = 1.25 + Math.min(1.75, (absDx - 160) / 200);
+    }
+    const isChasingFast = absDx > 260;
+    const curSpeed = this.speed * chaseBoost;
 
     this.x += moveX * curSpeed * dt;
     this.laneY += moveY * (this.speed * 0.62) * dt;
